@@ -4,7 +4,9 @@ from bcrypt import hashpw, gensalt, checkpw
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "NlfXwuU9XjHD0CrtXDqSxLLyQgunDXXv6JfLWHmotenCqrwT9SVE0sWqFB8Ppdu5"  
-app.config["MONGO_URI"] = "mongodb+srv://cgsoledispa:soledispa1@cluster0.l8edvdn.mongodb.net/cluster0"
+# app.config["MONGO_URI"] = "mongodb+srv://cgsoledispa:soledispa1@cluster0.l8edvdn.mongodb.net/cluster0"
+app.config["MONGO_URI"] = "mongodb+srv://heroe:heroe@cluster0.wkxtx.mongodb.net/chris"
+
 mongo = PyMongo(app)
 
 @app.route("/")

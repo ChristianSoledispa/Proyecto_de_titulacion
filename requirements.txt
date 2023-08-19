@@ -1,0 +1,4 @@
+djongo
+pymongo 
+djangorestframework 
+django-cors-headers
