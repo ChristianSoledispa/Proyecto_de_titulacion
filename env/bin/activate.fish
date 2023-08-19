@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/zukyo/Desktop/thesis/auth_django/env"
+set -gx VIRTUAL_ENV "/home/zukyo/Desktop/thesis/Proyecto_de_titulacion/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

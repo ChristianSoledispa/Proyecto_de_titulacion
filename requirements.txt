@@ -1,4 +1,19 @@
-djongo
-pymongo 
-djangorestframework 
-django-cors-headers
+Django==4.1.1
+# PyMongo==4.2.0
+pymongo==3.12.3
+djongo==1.3.6
+mango-jwt==1.3.2
+PyJWT==v1.7.1 # this is for encode-8 without this don't generate the jwt token 
+
+# django-rest-framework==0.1.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2 # create tokens https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
+
+Pygments==2.16.1 # Pygments is a syntax highlighting package written in Python.
+django-cors-headers==4.2.0 # https://www.youtube.com/watch?v=diB38AvVkHw
+Pillow==10.0.0
+srv==1.1.0
+
+
+# pip install -r requirements.txt
+# python manage.py createsuperuser

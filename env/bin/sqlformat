@@ -1,4 +1,4 @@
-#!/home/zukyo/Desktop/thesis/auth_django/env/bin/python3
+#!/home/zukyo/Desktop/thesis/Proyecto_de_titulacion/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

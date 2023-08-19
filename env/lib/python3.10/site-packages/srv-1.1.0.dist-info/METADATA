@@ -1,0 +1,38 @@
+Metadata-Version: 2.1
+Name: srv
+Version: 1.1.0
+Summary: Serve a directory with one command
+Home-page: https://github.com/dkter/srv
+Author: David Teresi
+Author-email: dkteresi@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Internet :: WWW/HTTP :: HTTP Servers
+Classifier: Typing :: Typed
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: twisted
+Requires-Dist: jinja2
+
+srv
+---
+
+Serve a directory with one command.
+
+### Install
+
+    pip install srv
+
+### Usage
+
+    srv [-p PORT] [dir]
+
+To serve the current directory from port 8000:
+
+    srv
+
+![Screenshot](https://raw.githubusercontent.com/dkter/srv/assets/screenshot.png)
+
