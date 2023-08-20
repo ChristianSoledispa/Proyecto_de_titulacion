@@ -11,7 +11,7 @@ from django.urls import re_path
 from . import views 
  
 urlpatterns = [ 
-    re_path(r'^api/auths$', views.authentication_list),
-    re_path(r'^api/auths/(?P<pk>[0-9]+)$', views.authentication_detail),
-    re_path(r'^api/auths/superuser$', views.authentication_list_is_superuser)
+    re_path('api/auths', views.AuthenticationAPI.authentication_list),
+    re_path('api/auths/<int:pk>', views.AuthenticationAPI.authentication_detail),
+    re_path('api/auths/superuser', views.AuthenticationAPI.authentication_list_is_superuser)
 ]

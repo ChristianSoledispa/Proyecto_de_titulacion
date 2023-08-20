@@ -1,18 +1,3 @@
-"""thesis URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views   
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import include, path
 
@@ -28,9 +13,38 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
+
+from .views import login_view, otp_view, main_view, logout_view
+
+# from allauth.account.views import LoginView
+# from allauth.account.views import SignupView
+# from allauth.account.views import LogoutView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('authentications.urls')),
+    path('api/schema', SpectacularAPIView.as_view(), name="schema"),
+    path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name="schema")),
+    
+    
+    path('', main_view, name="main"),
+    path('login/', login_view, name="login"),
+    path('otp/', otp_view, name="otp"),
+    path('logout/', logout_view, name="logout"),
+
+
+
+
+
+
+    # path('accounts/', include('allauth.urls')),
+    # path('accounts/login', LoginView.as_view(), name="account_login"),
+    # path('accounts/signup', SignupView.as_view(), name="account_signup"),
+    # path('accounts/logout', LogoutView.as_view(), name="account_logout"),
+
+    
     # path("accounts/", include("accounts.urls")),
     # path('api-auth/', include('rest_framework.urls')),
     # path('todos/', include(todo_urls)),
@@ -40,5 +54,7 @@ urlpatterns = [
 
     # path('authentications/', include('authentications.urls')),
     # path(r'^', include('authentications.urls')),
+
+
 
 ]

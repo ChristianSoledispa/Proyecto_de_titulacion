@@ -46,6 +46,7 @@ CORS_ALLOWED_CREDENTIALS=True
 DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    'django.contrib.sites',
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
@@ -60,12 +61,42 @@ LOCAL_APPS = [
 ]
 
 EXTERNAL_APPS = [
-    # "tailwind",
+    # "tailwindcss",
     "rest_framework",
     "rest_framework.authtoken",
+    'drf_spectacular',
+    # django allauth
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
+INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + LOCAL_APPS 
+
+# SITE_ID = 1
+# LOGIN_REDIRECT_URL = "/scrapping"
+
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
+
+# BASE_DIR = Path(__file__).resolve().parent
+
+# TAILWINDCSS_CLI_FILE = BASE_DIR / 'tailwindcss-linux-x64'
+# TAILWINDCSS_CONFIG_FILE = BASE_DIR / 'tailwind.config.js'
+
+# For file mode
+# TAILWINDCSS_OUTPUT_FILE = 'style.css'
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': (
@@ -78,6 +109,18 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
 #     ),
     
 # }
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Scrapping API',
+    'DESCRIPTION': 'Based to locate websites and getting relevant authors in social medias (Dev: Christian Soledispa)',
+    'VERSION': '1.5.1',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 from datetime import timedelta
 
@@ -102,12 +145,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+LOGIN_URL = 'login/'
 ROOT_URLCONF = "thesis.urls"
+
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -115,10 +160,18 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # 'django.template.context_processors.request',
+
+                
             ],
         },
     },
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
 
 WSGI_APPLICATION = "thesis.wsgi.application"
 
