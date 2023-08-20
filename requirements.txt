@@ -13,7 +13,20 @@ Pygments==2.16.1 # Pygments is a syntax highlighting package written in Python.
 django-cors-headers==4.2.0 # https://www.youtube.com/watch?v=diB38AvVkHw
 Pillow==10.0.0
 srv==1.1.0
+pymongo[srv]
 
 
+
+
+# build environment commands
+# python -m venv env
 # pip install -r requirements.txt
+
+# commands used
+# python manage.py makemigrations
+# python manage.py migrate
+# python manage.py runserver
+
+
+# other commands
 # python manage.py createsuperuser
