@@ -54,9 +54,9 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     "authentications",
-    "accounts",
+    # "accounts",
     # "todo_api",
-    "user_api",
+    # "user_api",
 ]
 
 EXTERNAL_APPS = [
@@ -67,17 +67,17 @@ EXTERNAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + EXTERNAL_APPS
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-            #https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#             #https://www.django-rest-framework.org/api-guide/settings/#default_authentication_classes
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     ),
     
-}
+# }
 
 from datetime import timedelta
 
@@ -86,6 +86,10 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8000',
+)
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -125,15 +129,15 @@ WSGI_APPLICATION = "thesis.wsgi.application"
 DATABASES = {
         'default': {
             'ENGINE': 'djongo',
-            'NAME': 'christthesis',
+            'NAME': '1christthesis',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': 'mongodb+srv://heroe:heroe@cluster0.wkxtx.mongodb.net/christthesis?retryWrites=true&w=majority'
+                'host': 'mongodb+srv://heroe:heroe@cluster0.wkxtx.mongodb.net/1christthesis?retryWrites=true&w=majority'
             }  
         }
 }
 
-AUTH_USER_MODEL = 'user_api.AppUser'
+# AUTH_USER_MODEL = 'user_api.AppUser'
 
 
 
@@ -142,7 +146,7 @@ AUTH_USER_MODEL = 'user_api.AppUser'
 MANGO_JWT_SETTINGS = {
     "db_host": 'cluster0.wkxtx.mongodb.net', # Use srv host if connecting with MongoDB Atlas Cluster
     # "db_port": "some_db_port", # Don't include this field if connecting with MongoDB Atlas Cluster
-    "db_name": "chrisauth",
+    "db_name": "1christthesis",
     "db_user": "heroe",
     "db_pass": "heroe"
 }

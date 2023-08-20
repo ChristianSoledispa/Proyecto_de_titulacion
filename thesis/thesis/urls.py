@@ -6,7 +6,7 @@ Examples:
 Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
+Class-based views   
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
@@ -31,16 +31,14 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('authentications.urls')),
-    path("accounts/", include("accounts.urls")),
-    path('api-auth/', include('rest_framework.urls')),
+    # path("accounts/", include("accounts.urls")),
+    # path('api-auth/', include('rest_framework.urls')),
     # path('todos/', include(todo_urls)),
-    path('api-token-auth/', obtain_auth_token),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/', include('user_api.urls')),
-
-
-
+    # path('api-token-auth/', obtain_auth_token),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/', include('user_api.urls')),
 
     # path('authentications/', include('authentications.urls')),
+    # path(r'^', include('authentications.urls')),
 
 ]
