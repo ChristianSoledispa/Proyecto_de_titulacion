@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.urls import re_path
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -16,8 +17,7 @@ from rest_framework_simplejwt.views import (
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
-from .views import login_view, otp_view, main_view, logout_view
-
+from .views import login_view, otp_view, main_view, logout_view, scrapping_view
 # from allauth.account.views import LoginView
 # from allauth.account.views import SignupView
 # from allauth.account.views import LogoutView
@@ -25,14 +25,12 @@ from .views import login_view, otp_view, main_view, logout_view
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('authentications.urls')),
-    path('api/schema', SpectacularAPIView.as_view(), name="schema"),
-    path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name="schema")),
+    # path('api/schema', SpectacularAPIView.as_view(), name="schema"),
+    # path('api/schema/docs/', SpectacularSwaggerView.as_view(url_name="schema")),
     
     
-    path('', main_view, name="main"),
-    path('login/', login_view, name="login"),
-    path('otp/', otp_view, name="otp"),
-    path('logout/', logout_view, name="logout"),
+    # path('', main_view, name="main"),
+    path("__reload__/", include("django_browser_reload.urls")),
 
 
 

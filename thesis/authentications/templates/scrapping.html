@@ -1,0 +1,128 @@
+{% extends "base.html" %} {% block content %} {% if error_message %}
+<p>{{error_message}}</p>
+{% endif %}
+<div class="w-full absolute justify-end items-end top-0">
+  <ul class="flex justify-between ul-navbar">
+    <li class="li-navbar">
+      <a class="bg-violet-500" href="#">Scrapping App</a>
+    </li>
+    <li class="li-navbar"><a href="#">My history</a></li>
+    <li class="grow"><a href="#"></a></li>
+    <li class="li-navbar"><a href="/logout">Log Out</a></li>
+  </ul>
+  <div class="mt-16 flex flex-col justify-end items-end">
+    <p class="bold">{{user.username}}</p>
+    <p class="bold">{{user.email}}</p>
+  </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-1 gap-2 md:gap-10 flex-col">
+  <section>
+    <form
+      class="flex justify-center align-center mt-20 flex-col"
+      method="POST"
+      action="/scrapping/{{ user.id }}"
+    >
+      {% csrf_token %}
+      <span class="text-2xl py-5">Scriping an User in the web</span>
+      <div class="sm:col-span-4">
+        <label
+          for="user_typed"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >Type an user</label
+        >
+        <div class="my-2">
+          <input
+            id="user_typed"
+            name="user_typed"
+            type="user_typed"
+            placeholder="Example: Ronaldo"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+      <div class="my-2 py-5">
+        <button
+          class="w-full bg-blue-600 focus:ring-indigo-600 text-white border-0"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+    <div class="flex absolute justify-center items-center">
+      <ul>
+        {% if profile_crapp %}
+        <li class="font-bold">
+          Username: <span class="font-normal">{{profile_crapp.username}}</span>
+        </li>
+        <li class="font-bold">
+          User ID: <span class="font-normal">{{profile_crapp.userid}}</span>
+        </li>
+        <li class="font-bold">
+          Number of Posts:
+          <span class="font-normal">{{profile_crapp.mediacount}}</span>
+        </li>
+        <li class="font-bold">
+          Followers Count:
+          <span class="font-normal">{{profile_crapp.followers}}</span>
+        </li>
+        <li class="font-bold">
+          Bio: <span class="font-normal">{{profile_crapp.biography}}</span>
+        </li>
+        <li class="font-bold">
+          External URL:
+          <a href="{{profile_crapp.external_url}}" class="font-normal"
+            >{{profile_crapp.external_url}}</a
+          >
+        </li>
+        {% else %}
+        <td id="error">{{error_crapp}}</td>
+        {% endif %}
+      </ul>
+    </div>
+  </section>
+  <section>
+    <form
+      class="flex justify-center align-center flex-col mt-44 md:mt-20"
+      method="POST"
+      action="/scrapping/website/{{ user.id }}"
+    >
+      {% csrf_token %}
+      <span class="text-2xl py-5">Scriping links in website</span>
+      <div class="sm:col-span-4">
+        <label
+          for="web_typed"
+          class="block text-sm font-medium leading-6 text-gray-900"
+          >Type a web site</label
+        >
+        <div class="my-2">
+          <input
+            id="web_typed"
+            name="web_typed"
+            type="text"
+            placeholder="Example: www.lamborghini.com/"
+            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+      <div class="my-2 py-5">
+        <button
+          class="w-full bg-blue-600 focus:ring-indigo-600 text-white border-0"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+    <div class="flex justify-center items-center">
+      <ul class="grid grid-cols-3 gap-4">
+        {% if website_scrapping %} {% for anchor in website_scrapping %}
+        <li class="font-bold py-1">
+          Address: <a class="font-normal cursor-pointer" href="{{ anchor }}">{{anchor}}</a>
+        </li>
+        {% endfor %} {% endif %}
+      </ul>
+    </div>
+  </section>
+</div>
+{% endblock content %}
