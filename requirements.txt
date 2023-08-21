@@ -1,33 +1,75 @@
-Django==4.1.1
-# PyMongo==4.2.0
-pymongo==3.12.3
-djongo==1.3.6
-mango-jwt==1.3.2
-PyJWT==v1.7.1 # this is for encode-8 without this don't generate the jwt token 
-
-# django-rest-framework==0.1.0
-djangorestframework==3.14.0
-djangorestframework-simplejwt==5.2.2 # create tokens https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html
-
-Pygments==2.16.1 # Pygments is a syntax highlighting package written in Python.
-django-cors-headers==4.2.0 # https://www.youtube.com/watch?v=diB38AvVkHw
-Pillow==10.0.0
-srv==1.1.0
-# pymongo==4.4.1
-# swagger
-drf-spectacular==0.26.4
-PyYAML==6.0.1
-uritemplate==4.1.1
-django-tailwindcss==0.4.0
-django-allauth==0.54.0
+arrow==1.2.3
+asgiref==3.7.2
+attrs==23.1.0
+Automat==22.10.0
+beautifulsoup4==4.12.2
+binaryornot==0.4.4
 bs4==0.0.1
-
-pyotp==2.9.0
-django-tailwind==3.6.0
-django-tailwind[reload]
-
-tailwind
+certifi==2023.7.22
+cffi==1.15.1
+chardet==5.2.0
+charset-normalizer==3.2.0
+click==8.1.7
+constantly==15.1.0
+cookiecutter==2.3.0
+cryptography==41.0.3
+defusedxml==0.7.1
+Django==4.1.1
+django-allauth==0.54.0
 django-browser-reload==1.11.0
+django-cors-headers==4.2.0
+django-rest-framework==0.1.0
+django-tailwind==3.6.0
+django-tailwindcss==0.4.0
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
+djongo==1.3.6
+dnspython==2.4.2
+drf-spectacular==0.26.4
+hyperlink==21.0.0
+idna==3.4
+incremental==22.10.0
+inflection==0.5.1
+instaloader==4.10
+Jinja2==3.1.2
+jsonschema==4.19.0
+jsonschema-specifications==2023.7.1
+mango-jwt==1.3.2
+markdown-it-py==3.0.0
+MarkupSafe==2.1.3
+mdurl==0.1.2
+numpy==1.25.2
+oauthlib==3.2.2
+pandas==2.0.3
+passlib==1.7.4
+Pillow==10.0.0
+pycparser==2.21
+Pygments==2.16.1
+PyJWT==1.7.1
+pymongo==3.12.3
+pyotp==2.9.0
+python-dateutil==2.8.2
+python-slugify==8.0.1
+python3-openid==3.2.0
+pytz==2023.3
+PyYAML==6.0.1
+referencing==0.30.2
+requests==2.31.0
+requests-oauthlib==1.3.1
+rich==13.5.2
+rpds-py==0.9.2
+six==1.16.0
+soupsieve==2.4.1
+sqlparse==0.2.4
+srv==1.1.0
+tailwind==3.1.5b0
+text-unidecode==1.3
+Twisted==22.10.0
+typing_extensions==4.7.1
+tzdata==2023.3
+uritemplate==4.1.1
+urllib3==2.0.4
+zope.interface==6.0
 
 
 
