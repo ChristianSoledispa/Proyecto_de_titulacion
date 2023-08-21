@@ -11,21 +11,21 @@ POST {{baseUrl}}/api/auths HTTP/1.1
 content-type: application/json
 
 {
-    "username": "chrisred",
-    "email": "chrisred@gmail.com",
-    "password": "chrisred17."
+    "username": "7chrisred",
+    "email": "7chrisred@gmail.com",
+    "password": "7chrisred17."
 }
 
 ###
-PUT {{baseUrl}}/api/auths/1 HTTP/1.1
+PUT {{baseUrl}}/api/auths/8 HTTP/1.1
 content-type: application/json
 
 {
-    "username": "Chris Redfield",
+    "username": "Christian Sole",
     "email": "chris-redfield@gmail.com",
-    "password": "chrisred17."
+    "password": "Christi."
 }
 
 ###
-DELETE  {{baseUrl}}/api/auths/3 HTTP/1.1
+DELETE  {{baseUrl}}/api/auths/6 HTTP/1.1
 content-type: application/json

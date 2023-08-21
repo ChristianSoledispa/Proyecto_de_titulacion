@@ -7,6 +7,14 @@ bot = instaloader.Instaloader()
 # Loading a profile from an Instagram handle
 cuenta=input("Ingresa el nombre de usuario a realizar scraping:")
 profile = instaloader.Profile.from_username(bot.context, cuenta)
+
+# L = instaloader.Instaloader()
+
+# id = 'erickdevf18'
+# pw = 'Kiokusanagi17.'
+
+# L.load_session(id, pw)
+# L.login(id, pw)
 print("Username: ", profile.username)
 print("User ID: ", profile.userid)
 print("Number of Posts: ", profile.mediacount)
