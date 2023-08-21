@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+<div class="flex justify-center items-center">
+  {% block content %} 
+  
+  {% comment %} {% if error_message %}
+  <p>{{error_message}}</p>
+  {% endif %} {% endcomment %}
+</div>
+<form class="px-40" method="POST">
+  {% csrf_token %}
+  <div class="sm:col-span-4">
+    <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
+      >Email address</label
+    >
+    <div class="my-2">
+      <input
+        id="email"
+        required
+        name="email"
+        type="email"
+        autocomplete="email"
+        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
+    </div>
+  </div>
+  <div class="sm:col-span-4">
+    <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
+      >Password</label
+    >
+    <div class="my-2">
+      <input
+        id="password"
+        required
+        name="password"
+        type="password"
+        autocomplete="password"
+        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+      />
+    </div>
+  </div>
+  <div class="my-2 py-5">
+    <button
+      class="w-full bg-blue-600 focus:ring-indigo-600 text-white border-0"
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+
+{% endblock content %}

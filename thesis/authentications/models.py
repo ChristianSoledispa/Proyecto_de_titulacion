@@ -1,4 +1,5 @@
-from django.db import models
+# from django.db import models
+from djongo import models
 
 
 class Authentication(models.Model):
