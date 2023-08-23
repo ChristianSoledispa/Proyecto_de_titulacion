@@ -10,8 +10,8 @@ profile = instaloader.Profile.from_username(bot.context, cuenta)
 
 # L = instaloader.Instaloader()
 
-# id = 'erickdevf18'
-# pw = 'Kiokusanagi17.'
+# id = 'user'
+# pw = 'password.'
 
 # L.load_session(id, pw)
 # L.login(id, pw)
