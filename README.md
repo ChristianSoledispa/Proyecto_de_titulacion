@@ -1,6 +1,6 @@
-<a href="https://aimeos.org/">
+<div>
     <img src="https://www.edureka.co/blog/wp-content/uploads/2018/11/Untitled-1.jpg" alt="webScrapping logo" title="webScrapping" align="right" height="80" />
-</a>
+</div>
 
 # Proyecto de Titulación
 
@@ -11,6 +11,10 @@
 Este es un proyecto profesional dedicado para el trabajo de grado de mi Tesis. Todo la documentación completa se detalla y se especifica en este repositorio el cual existe todo el código realizado. Todo el código fuente es de código libre y puede ser personalizado en cualquier aspecto según tus necesidades.
 
 ![scrapping-frontend](img/frontend.png)
+
+<div>
+    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="200" />
+</div>
 
 ## Tabla de Contenidos
 
