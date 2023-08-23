@@ -1,14 +1,13 @@
 {
-    "builds": [
+  "builds": [{
+      "src": "thesis/thesis",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+  }],
+  "routes": [
       {
-        "src": "thesis/thesis/wsgi.py",
-        "use": "@vercel/python"
+          "src": "/(.*)",
+          "dest": "thesis/wsgi.py"
       }
-    ],
-    "routes": [
-      {
-        "src": "/thesis/(.*)",
-        "dest": "thesis/thesis/wsgi.py"
-      }
-    ]
+  ]
 }

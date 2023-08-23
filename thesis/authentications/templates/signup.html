@@ -5,7 +5,7 @@
   <p>{{error_message}}</p>
   {% endif %} {% endcomment %}
 </div>
-<form class="px-40" method="POST">
+<form class="px-40" method="POST" action="/login/">
   {% csrf_token %}
   <div class="sm:col-span-4">
     <label for="email" class="block text-sm font-medium leading-6 text-gray-900"
@@ -47,8 +47,8 @@
   </div>
 </form>
 <div class="flex justify-center items-center">
-  <p>Are you not registered yet? </p>
-  <a href="/signup/" class="text-blue-700"> Register!</a>
+  <p>Have you an User? </p>
+  <a href="/login/" class="text-blue-700"> Login!</a>
 </div>
 
 {% endblock content %}

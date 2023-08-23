@@ -6,18 +6,18 @@ SECRET_KEY = "django-insecure-sy8vvn#o1h)84^lpnj!ctf0(g1$*btvherg@(1i#1+r061q#74
 
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app"]
+ALLOWED_HOSTS = ["*"]
 
 # CORS_ORIGIN_ALLOW_ALL = True
 # for REACT
-CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
-    "https://sub.example.com",
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:9000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8080",
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+#     "http://127.0.0.1:9000",
+# ]
 
 CORS_ALLOWED_CREDENTIALS=True
 
@@ -53,8 +53,7 @@ EXTERNAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + LOCAL_APPS 
 
-# SITE_ID = 1
-# LOGIN_REDIRECT_URL = "/scrapping"
+
 
 # SOCIALACCOUNT_PROVIDERS = {
 #     'google': {
@@ -110,12 +109,12 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
-)
+# CORS_ORIGIN_WHITELIST = (
+    # 'http://localhost:8000',
+# )
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    # "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -126,6 +125,9 @@ MIDDLEWARE = [
 "django_browser_reload.middleware.BrowserReloadMiddleware",
 
 ]
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/scrapping"
 
 LOGIN_URL = 'login/'
 LOGOUT_URL = 'logout/'

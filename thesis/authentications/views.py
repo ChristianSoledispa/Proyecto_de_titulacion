@@ -198,7 +198,7 @@ class ScrappingAPI(APIView):
 
         return render(request, "login.html", {'error_message': 'Invalid username or password'})
 
-    def otp_view(request):
+    def signup_view(request):
         error_message = None
         if request.method == 'POST':
             otp = request.POST.get('otp')
@@ -228,7 +228,7 @@ class ScrappingAPI(APIView):
                     error_message = 'OTP expired'
             else:
                 error_message = 'ups... something went wrong'
-        return render(request, "otp.html", {'error_message': error_message})
+        return render(request, "signup.html", {'error_message': error_message})
                     
             
     @login_required
