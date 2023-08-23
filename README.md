@@ -4,7 +4,7 @@
 
 # Proyecto de Titulación
 
-[![Licencia](https://poser.pugx.org/aimeos/aimeos-typo3/license.svg)](https://packagist.org/packages/aimeos/aimeos-typo3)
+![Licencia](https://poser.pugx.org/aimeos/aimeos-typo3/license.svg)
 
 :star: ¡Dame una estrella en GitHub!
 
@@ -13,7 +13,7 @@ Este es un proyecto profesional dedicado para el trabajo de grado de mi Tesis. T
 <!-- ![scrapping-frontend](img/frontend.png) -->
 
 <div>
-    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="330" />
+    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="340" />
 </div>
 
 ## Tabla de Contenidos
