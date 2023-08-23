@@ -10,10 +10,10 @@
 
 Este es un proyecto profesional dedicado para el trabajo de grado de mi Tesis. Todo la documentación completa se detalla y se especifica en este repositorio el cual existe todo el código realizado. Todo el código fuente es de código libre y puede ser personalizado en cualquier aspecto según tus necesidades.
 
-![scrapping-frontend](img/frontend.png)
+<!-- ![scrapping-frontend](img/frontend.png) -->
 
 <div>
-    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="200" />
+    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="290" />
 </div>
 
 ## Tabla de Contenidos
