@@ -13,7 +13,7 @@ Este es un proyecto profesional dedicado para el trabajo de grado de mi Tesis. T
 <!-- ![scrapping-frontend](img/frontend.png) -->
 
 <div>
-    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="290" />
+    <img src="img/frontend.png" alt="webScrapping logo" title="webScrapping" align="right" height="330" />
 </div>
 
 ## Tabla de Contenidos
