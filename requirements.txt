@@ -87,4 +87,4 @@ zope.interface==6.0
 
 # other commands
 # python manage.py spectacular --file open-schema.yml
-# python manage.py createsuperuser
+# python manage.py createsuperuserm

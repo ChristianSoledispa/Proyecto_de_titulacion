@@ -1,5 +1,6 @@
 {
     "emmet.includeLanguages": {
         "django-html": "html"
-    }
+    },
+    "cSpell.language": "es"
 }
