@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block content %} {% if error_message %}
+<p>{{error_message}}</p>
+{% endif %}
+<div class="w-full absolute justify-end items-end top-0">
+  <ul class="flex justify-between ul-navbar">
+    <li class="li-navbar">
+      <a class="bg-violet-500" href="#">Scrapping App</a>
+    </li>
+    <li class="li-navbar">
+      <a href="/scrapping/{{ user.id }}">Scrapp webs and users</a>
+    </li>
+    <li class="grow"><a href="#"></a></li>
+    <li class="li-navbar"><a href="/logout">Log Out</a></li>
+  </ul>
+  <div class="mt-16 flex flex-col justify-end items-end">
+    <p class="bold">{{user.username}}</p>
+    <p class="bold">{{user.email}}</p>
+  </div>
+</div>
+<div class="grid grid-cols-2 gap-40 lg:gap-64 flex-col">
+  <section>
+    <div class="flex justify-center items-center flex-col text-left">
+      <h1 class="py-2 text-2xl">User Scrapping</h1>
+      <div class="py-5">
+        <p>Total Count</p>
+        <p>List of Scraping Users</p>
+      </div>
+      <ul>
+        {% if data_history %} {% for history in data_history %}
+        <li>> {{history.user_scrapping}}</li>
+        {% endfor %} {% endif %}
+      </ul>
+    </div>
+  </section>
+  <section>
+    <div class="flex justify-center items-center flex-col text-left">
+      <h1 class="py-2 text-2xl">Webs Scrapping</h1>
+      <div class="py-5">
+        <p>Total Count</p>
+        <p>List of Scraping Webs</p>
+      </div>
+      <ul>
+        {% if data_history %} {% for history in data_history %}
+        <li>> {{history.web_scrapping}}</li>
+        {% endfor %} {% endif %}
+      </ul>
+    </div>
+  </section>
+</div>
+{% endblock content %}

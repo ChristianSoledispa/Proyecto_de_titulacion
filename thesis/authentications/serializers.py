@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from authentications.models import Authentication
+from authentications.models import Authentication, History
  
  
 class AuthenticationSerializer(serializers.ModelSerializer):
@@ -11,3 +11,10 @@ class AuthenticationSerializer(serializers.ModelSerializer):
                   'email',
                   'password',
                   'is_superuser')
+        
+
+class HistorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = History
+        fields = '__all__'

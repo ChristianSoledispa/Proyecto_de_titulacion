@@ -9,8 +9,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from authentications.models import Authentication
-from authentications.serializers import AuthenticationSerializer
+from authentications.models import Authentication, History
+from authentications.serializers import AuthenticationSerializer, HistorySerializer
 from rest_framework.decorators import api_view
 
 
@@ -173,27 +173,16 @@ class ScrappingAPI(APIView):
 
     def login_view(request):
 
-        # error_message = None
-        # my_client = pymongo.MongoClient(connect_string)
-        # dbname = my_client['1christthesis']
-        # collection_name = dbname["authentications_authentication"]
-
         if request.method == 'POST':
             username = request.POST.get('email')
             password = request.POST.get('password')
             print("username: %s" % username, "password: %s" % password)
-            # login_details = list(collection_name.find({
-            #     "username":f"{username}"}))
-            # login_details = list(collection_name.find({"username":username}))
-            # print("login_details: %s" % login_details, "password: %s" % password)
 
             
             login_details = Authentication.objects.filter(email=username).values().first()
             print("login_details: %s" % login_details, "password: %s" % password)
             if login_details is not None:
-                # details_client = login_details.pop()
-                # print("details_client", details_client)
-                # return HttpResponseRedirect(reverse('scrapping', args=(list({'id_client': login_details}))))
+
                 return redirect('scrapping',id_client=1)
 
         return render(request, "login.html", {'error_message': 'Invalid username or password'})
@@ -242,58 +231,141 @@ class ScrappingAPI(APIView):
         return redirect('login')
 
 
-    def scrapping_user_view(request, id_client):
+    def scrapping_view(request, id_client):
         user_client = Authentication.objects.get(id=id_client)
         print("user_client: %s" % user_client.username)
         context ={ 'user': user_client}
         if request.method == 'POST':
+             # FIRST FORM   
             user_typed = request.POST.get('user_typed')
             if user_typed: 
                 bot = instaloader.Instaloader()
-                
                 cuenta=user_typed
-                profile_crapp = instaloader.Profile.from_username(bot.context, cuenta)
-                context["profile_crapp"] = profile_crapp
+
+                try:
+                    profile_crapp = instaloader.Profile.from_username(bot.context, cuenta)
+                    context["profile_crapp"] = profile_crapp
+                    
+                    user_history = History.objects.create(
+                    hasUser=True,
+                    email=user_client.email,
+                    userId=id_client,
+                    user_scrapping=user_typed,
+                    web_scrapping=""
+                )
+                    user_history.save()                
+                except:
+                    context["error_user_scrapping"] = "Unknown User may you can try with another user"
+
             else:
-                context["error_scrapping"] = "Unknown User"
-        return render(request, "scrapping.html", context)
+                context["error_user_scrapping"] = "Unknown User"
 
-    def scrapping_web_view(request, id_client):
-        # print("id_client: ", request["id_client"])
-        user_client = Authentication.objects.get(id=id_client)
-        template = loader.get_template('scrapping.html')
-
-        context={ "user": user_client}
-        if request.method == 'POST':
+             # SECOND FORM   
             web_typed = request.POST.get('web_typed')
             another = request.POST.get('loco_typed')
             
-            if web_typed: 
-
-                # if web_typed.startswith('www.'):
-                    
+            if web_typed and web_typed.lower().startswith('http'): 
                 # url = "https://www.lamborghini.com/en-en"
                 url = web_typed
                 print("url", url)
                 response = requests.get(url)
                 if response.status_code == 200:
-                    soup = BeautifulSoup(response.content, "html.parser")
-                    
-                    links = soup.find_all("a")
-                    data = []
-                    for link in links:
-                        data.append(link.get("href"))
-                        # print(link.get("href"))
 
-                    context["website_scrapping"] = data
-                    # request["id_client"] = id_client
-                    # return render(request, template,  context, id_client=id_client)
+                    try:
+                        soup = BeautifulSoup(response.content, "html.parser")
+                        
+                        links = soup.find_all("a")
+                        data = []
+                        for link in links:
+                            data.append(link.get("href"))
+                            # print(link.get("href"))
+                        print("An exception occurred")
+                        context["website_scrapping"] = data
+                        
+                        user_history = History.objects.create(
+                        hasUser=True,
+                        email=user_client.email,
+                        userId=id_client,
+                        user_scrapping="",
+                        web_scrapping=web_typed,
+                        )
+                        user_history.save()                       
+                    except:
+                        context["error_web_scrapping"] = f"Website not reachable due to wrong website typed {web_typed}"
+
+
                     return render(request, "scrapping.html",  context)
                 else:
-                    context["error_scrapping"] = f"Website not reachable due to wrong website typed {web_typed}"
+                    context["error_web_scrapping"] = f"Website not reachable due to wrong website typed {web_typed}"
             else:
-                context["error_scrapping"] = "Required email correctly of the website"
-        return redirect("scrapping.html", id_client=id_client)
+                context["error_web_scrapping"] = "Required email correctly of the website"
+                
+        return render(request, "scrapping.html", context)
+
+    # def scrapping_web_view(request, id_client):
+    #     # print("id_client: ", request["id_client"])
+    #     user_client = Authentication.objects.get(id=id_client)
+
+    #     if request.method == 'POST':
+    #         web_typed = request.POST.get('web_typed')
+    #         another = request.POST.get('loco_typed')
+            
+    #         if web_typed: 
+    #             # if web_typed.startswith('www.'):
+    #             # url = "https://www.lamborghini.com/en-en"
+    #             url = web_typed
+    #             print("url", url)
+    #             response = requests.get(url)
+    #             if response.status_code == 200:
+    #                 soup = BeautifulSoup(response.content, "html.parser")
+                    
+    #                 links = soup.find_all("a")
+    #                 data = []
+    #                 for link in links:
+    #                     data.append(link.get("href"))
+    #                     # print(link.get("href"))
+    #                 context["website_scrapping"] = data
+    #                 # request["id_client"] = id_client
+    #                 # return render(request, template,  context, id_client=id_client)
+    #                 return render(request, "scrapping.html",  context)
+    #             else:
+    #                 context["error_scrapping"] = f"Website not reachable due to wrong website typed {web_typed}"
+    #         else:
+    #             context["error_scrapping"] = "Required email correctly of the website"
+    #     return redirect("scrapping.html", id_client=id_client)
+
+    def scrapping_history_view(request, id_client):
+        user_client = Authentication.objects.get(id=id_client)
+        if user_client is not None:
+            context={ "user": user_client}
+            
+            data_history = History.objects.filter(userId=id_client, email=user_client.email).values()
+
+
+            for i in data_history:
+                print(i)
+                            
+            clean_data = []
+
+            for i in data_history:
+                item_data = {}
+                if len(i['user_scrapping']) > 1:
+                    item_data['user_scrapping'] = i['user_scrapping']
+                if len(i['web_scrapping']) > 1:
+                    item_data['web_scrapping'] = i['web_scrapping']
+                if item_data:
+                    clean_data.append(item_data)
+            for i in clean_data:
+                print(i)
+            
+            context["data_history"] = clean_data
+            return render(request, "history.html", context)
+        else:
+            context["error_message"] = "User provided does not exist"
+            return render(request, "history.html", context)
+    
+    
+    
     
     @api_view(['GET', 'POST'])
     def api_scrapping_user_view(request, id_client):
@@ -356,74 +428,27 @@ class ScrappingAPI(APIView):
                 return JsonResponse({"error_scrapping": "Unknown User"}, status=status.HTTP_204_NO_CONTENT) 
         return JsonResponse({"error_scrapping": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST) 
 
+    @api_view(['GET', "DELETE"])
+    def api_scrapping_history_view(request, id_client):
+        user_client = Authentication.objects.get(id=id_client)
+        if request.method == 'GET':
+            try:
+                auth_get = Authentication.objects.filter(id=id_client).values()
+                history = History.objects.filter(email=auth_get[0]["email"]).values()
+                history_serializer = HistorySerializer(history, many=True)
+                return JsonResponse(history_serializer.data, safe=False, status=status.HTTP_200_OK)
 
-    # def scrapping_web_view(request, id_client):
-    #     user_client = Authentication.objects.get(id=id_client)
-    #     context ={ 'user': user_client}
-    #     if request.method == 'POST':
-    #         web_typed = request.POST.get('web_typed')
-    #         if web_typed: 
-    #             # Send an HTTP GET request to the URL
-    #             url = "https://www.lamborghini.com/en-en"
-    #             response = requests.get(url)
-                
-    #             # Check if the request was successful
-    #             if response.status_code == 200:
-    #                 # Parse the HTML content using BeautifulSoup
-    #                 soup = BeautifulSoup(response.content, "html.parser")
-                    
-    #                 # Find and print specific elements from the page
-    #                 # Example: Extract and print all the links
-    #                 links = soup.find_all("a")
-    #                 print(soup, "Successfully parsed1")
-    #                 print(type(soup), len(soup))
-    #                 print(soup, "Successfully parsed")
-    #                 # for link in links:
-    #                 #     print(link.get("href"))
+            except:
+                return JsonResponse({"data": ""}, status=status.HTTP_204_NO_CONTENT)
 
-    #                 context["web_scrapping"] = links
-    #                 return render(request, "scrapping.html", context)
-    #             else:
-    #                 context["error_web"] = f"Nothing to display here. {url}"
-    #         else:
-    #             context["error_web"] = "Error in your web address"
-    #     return render(request, "scrapping.html", context)
-    
+        if request.method == 'DELETE':
+            
+            try:
+                auth_delete = History.objects.filter(email=user_client.email).delete()
+                return JsonResponse({"result": True}, status=status.HTTP_200_OK) 
 
-# from rest_framework.views import APIView
-# from mongo_auth.permissions import AuthenticatedOnly
-# from rest_framework.response import Response
-# from rest_framework import status
+            except:
+                return JsonResponse({"error_scrapping": "Something went wrong with id of user"}, status=status.HTTP_204_NO_CONTENT)
 
-# from mongo_auth.permissions import AuthenticatedOnly
-# from rest_framework.decorators import permission_classes
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-# from rest_framework import status
 
-# class GetTest(APIView):
-
-#     permission_classes = [AuthenticatedOnly]
-
-#     def get(self, request, format=None):
-#         try:
-#             print(request.user)  # This is where magic happens
-#             return Response(status=status.HTTP_200_OK,
-#                             data={"data": {"msg": "User Authenticated"}})
-#         except:
-#             return Response(status=status.HTTP_404_NOT_FOUND)
-        
-        
-# # @api_view(["GET"])
-# # @permission_classes([AuthenticatedOnly])   
-# def auths(request):
-#     print(request.user)
-#     print(request.method)
-#     return HttpResponse("Hello world!")
-#     try:
-#         print(request.user)
-#         return Response(status=status.HTTP_200_OK,
-#                         data={"data": {"msg": "User Authenticated"}})
-#     except:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
+        return JsonResponse({"error_scrapping": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST) 
