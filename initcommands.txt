@@ -1,0 +1,15 @@
+# https://www.youtube.com/watch?v=DDSN1Tq9hz0
+
+# build environment commands
+# python -m venv env
+# pip install -r requirements.txt
+
+# commands used
+# python manage.py makemigrations
+# python manage.py migrate
+# python manage.py runserver
+
+
+# other commands
+# python manage.py spectacular --file open-schema.yml
+# python manage.py createsuperuserm
