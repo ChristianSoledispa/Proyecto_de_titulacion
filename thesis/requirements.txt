@@ -14,7 +14,7 @@ constantly==15.1.0
 cookiecutter==2.3.0
 cryptography==41.0.3
 defusedxml==0.7.1
-Django==4.1.1
+Django==3.2.20
 django-allauth==0.54.0
 django-browser-reload==1.11.0
 django-cors-headers==4.2.0
@@ -70,20 +70,3 @@ tzdata==2023.3
 uritemplate==4.1.1
 urllib3==2.0.4
 zope.interface==6.0
-
-
-# https://www.youtube.com/watch?v=DDSN1Tq9hz0
-
-# build environment commands
-# python -m venv env
-# pip install -r requirements.txt
-
-# commands used
-# python manage.py makemigrations
-# python manage.py migrate
-# python manage.py runserver
-
-
-# other commands
-# python manage.py spectacular --file open-schema.yml
-# python manage.py createsuperuserm
