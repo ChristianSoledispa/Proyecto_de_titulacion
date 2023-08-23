@@ -14,7 +14,7 @@ constantly==15.1.0
 cookiecutter==2.3.0
 cryptography==41.0.3
 defusedxml==0.7.1
-Django==4.1.1
+Django==3.2.20
 django-allauth==0.54.0
 django-browser-reload==1.11.0
 django-cors-headers==4.2.0
