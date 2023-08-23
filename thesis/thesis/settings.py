@@ -6,7 +6,7 @@ SECRET_KEY = "django-insecure-sy8vvn#o1h)84^lpnj!ctf0(g1$*btvherg@(1i#1+r061q#74
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".vercel.app"]
 
 # CORS_ORIGIN_ALLOW_ALL = True
 # for REACT
