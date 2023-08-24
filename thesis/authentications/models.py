@@ -18,7 +18,3 @@ class Authentication(models.Model):
     email = models.CharField(max_length=200, blank=False, unique=True)
     password = models.CharField(max_length=200, blank=False)
     is_superuser = models.BooleanField(default=False)
-
-
-
-

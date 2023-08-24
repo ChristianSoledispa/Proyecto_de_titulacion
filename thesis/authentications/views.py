@@ -13,11 +13,27 @@ from authentications.models import Authentication, History
 from authentications.serializers import AuthenticationSerializer, HistorySerializer
 from rest_framework.decorators import api_view
 
-
-
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 from django.forms.models import model_to_dict
+
+import datetime
+from django.template import loader
+from django.http import HttpResponse
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.urls import reverse       
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+import instaloader
+from django.core import serializers
+import requests
+from bs4 import BeautifulSoup
+
 
 class AuthenticationAPI(APIView):
 
@@ -143,29 +159,29 @@ class AuthenticationAPI(APIView):
             auths_serializer = AuthenticationSerializer(auths, many=True)
             return JsonResponse(auths_serializer.data, safe=False)
  
-import datetime
-from django.template import loader
-from django.http import HttpResponse
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import logout, authenticate, login
-from django.contrib.auth.decorators import login_required
-import pyotp
-from django.contrib.auth.models import User
-from django.urls import reverse       
-import pymongo
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-import instaloader
-from django.core import serializers
-import requests
-from bs4 import BeautifulSoup
+        user_client = Authentication.objects.get(id=id_client)
+        if request.method == 'GET':
+            try:
+                auth_get = Authentication.objects.filter(id=id_client).values()
+                history = History.objects.filter(email=auth_get[0]["email"]).values()
+                history_serializer = HistorySerializer(history, many=True)
+                return JsonResponse(history_serializer.data, safe=False, status=status.HTTP_200_OK)
 
+            except:
+                return JsonResponse({"data": ""}, status=status.HTTP_204_NO_CONTENT)
 
-connect_string ='mongodb+srv://heroe:heroe@cluster0.wkxtx.mongodb.net/1christthesis?retryWrites=true&w=majority'
-my_client = pymongo.MongoClient(connect_string)
-dbname = my_client['1christthesis']
-collection_name = dbname["authentications_authentication"]
+        if request.method == 'DELETE':
+            
+            try:
+                auth_delete = History.objects.filter(email=user_client.email).delete()
+                return JsonResponse({"result": True}, status=status.HTTP_200_OK) 
+
+            except:
+                return JsonResponse({"error_scrapping": "Something went wrong with id of user"}, status=status.HTTP_204_NO_CONTENT)
+
+        return JsonResponse({"error_scrapping": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST) 
+    
 
 class ScrappingAPI(APIView):
 
@@ -183,7 +199,7 @@ class ScrappingAPI(APIView):
             print("login_details: %s" % login_details, "password: %s" % password)
             if login_details is not None:
 
-                return redirect('scrapping',id_client=1)
+                return redirect('scrapping',id_client=login_details["id"])
 
         return render(request, "login.html", {'error_message': 'Invalid username or password'})
 
@@ -262,7 +278,7 @@ class ScrappingAPI(APIView):
 
              # SECOND FORM   
             web_typed = request.POST.get('web_typed')
-            another = request.POST.get('loco_typed')
+            # another = request.POST.get('loco_typed')
             
             if web_typed and web_typed.lower().startswith('http'): 
                 # url = "https://www.lamborghini.com/en-en"
@@ -298,41 +314,9 @@ class ScrappingAPI(APIView):
                 else:
                     context["error_web_scrapping"] = f"Website not reachable due to wrong website typed {web_typed}"
             else:
-                context["error_web_scrapping"] = "Required email correctly of the website"
+                context["error_web_scrapping"] = "Website not reachable due to wrong website typed valid with http: or https"
                 
         return render(request, "scrapping.html", context)
-
-    # def scrapping_web_view(request, id_client):
-    #     # print("id_client: ", request["id_client"])
-    #     user_client = Authentication.objects.get(id=id_client)
-
-    #     if request.method == 'POST':
-    #         web_typed = request.POST.get('web_typed')
-    #         another = request.POST.get('loco_typed')
-            
-    #         if web_typed: 
-    #             # if web_typed.startswith('www.'):
-    #             # url = "https://www.lamborghini.com/en-en"
-    #             url = web_typed
-    #             print("url", url)
-    #             response = requests.get(url)
-    #             if response.status_code == 200:
-    #                 soup = BeautifulSoup(response.content, "html.parser")
-                    
-    #                 links = soup.find_all("a")
-    #                 data = []
-    #                 for link in links:
-    #                     data.append(link.get("href"))
-    #                     # print(link.get("href"))
-    #                 context["website_scrapping"] = data
-    #                 # request["id_client"] = id_client
-    #                 # return render(request, template,  context, id_client=id_client)
-    #                 return render(request, "scrapping.html",  context)
-    #             else:
-    #                 context["error_scrapping"] = f"Website not reachable due to wrong website typed {web_typed}"
-    #         else:
-    #             context["error_scrapping"] = "Required email correctly of the website"
-    #     return redirect("scrapping.html", id_client=id_client)
 
     def scrapping_history_view(request, id_client):
         user_client = Authentication.objects.get(id=id_client)
@@ -342,21 +326,21 @@ class ScrappingAPI(APIView):
             data_history = History.objects.filter(userId=id_client, email=user_client.email).values()
 
 
-            for i in data_history:
-                print(i)
+            # for i in data_history:
+            #     print(i)
                             
             clean_data = []
 
             for i in data_history:
                 item_data = {}
-                if len(i['user_scrapping']) > 1:
+                if len(i['user_scrapping']) > 0:
                     item_data['user_scrapping'] = i['user_scrapping']
-                if len(i['web_scrapping']) > 1:
+                if len(i['web_scrapping']) > 0:
                     item_data['web_scrapping'] = i['web_scrapping']
                 if item_data:
                     clean_data.append(item_data)
-            for i in clean_data:
-                print(i)
+            # for i in clean_data:
+            #     print(i)
             
             context["data_history"] = clean_data
             return render(request, "history.html", context)
@@ -365,33 +349,32 @@ class ScrappingAPI(APIView):
             return render(request, "history.html", context)
     
     
-    
-    
-    @api_view(['GET', 'POST'])
-    def api_scrapping_user_view(request, id_client):
-        user_client = Authentication.objects.get(id=id_client)
-        print("user_client: %s" % user_client.username)
-        context ={ 'user': user_client}
+class RESTScrappingAPI(APIView):
+    @api_view(['POST'])
+    def api_scrapping_user_view(request):
+        # user_client = Authentication.objects.get(id=id_client)
+        # print("user_client: %s" % user_client.username)
+        # context ={ 'user': user_client}
         if request.method == 'POST':
             auth_data = JSONParser().parse(request)
             print("auth_data: ", auth_data)
             # user_typed = request.POST.get('user_typed')
             # print("user_typed:", user_typed)
-            if auth_data: 
-                print("succeeded")
+            if auth_data["account"]: 
+                # print("succeeded")
                 bot = instaloader.Instaloader()
-                print("succeeded")
-                cuenta="ronaldo"
+                # print("succeeded")
+                # print("")
+                cuenta=auth_data["account"]
                 profile_crapp = instaloader.Profile.from_username(bot.context, cuenta)
-                print("Username: ", profile_crapp.username)
-                print("User ID: ", profile_crapp.userid)  
-                print("Number of Posts: ", profile_crapp.mediacount   )
-                print("Followers Count: ", profile_crapp.followers)   
-                print("Following Count: ", profile_crapp.followees)   
-                print("Bio: ", profile_crapp.biography)   
-                print("External URL: ", profile_crapp.external_url)
-                print(dir(profile_crapp))   
-                l = [profile_crapp]
+                # print("Username: ", profile_crapp.username)
+                # print("User ID: ", profile_crapp.userid)  
+                # print("Number of Posts: ", profile_crapp.mediacount   )
+                # print("Followers Count: ", profile_crapp.followers)   
+                # print("Following Count: ", profile_crapp.followees)   
+                # print("Bio: ", profile_crapp.biography)   
+                # print("External URL: ", profile_crapp.external_url)
+                # print(dir(profile_crapp))   
                 # return JsonResponse(serializers.serialize('json', l), safe=True, status=status.HTTP_200_OK) 
                 return JsonResponse({
                     "username": profile_crapp.username,
@@ -406,18 +389,18 @@ class ScrappingAPI(APIView):
         return JsonResponse({"error_scrapping": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST) 
 
 
-    @api_view(['GET', 'POST'])
-    def api_scrapping_website_view(request, id_client):
-        user_client = Authentication.objects.get(id=id_client)
-        context ={ 'user': user_client}
+    @api_view(['POST'])
+    def api_scrapping_website_view(request):
+        # user_client = Authentication.objects.get(id=id_client)
+        # context ={ 'user': user_client}
         if request.method == 'POST':
-            auth_data = JSONParser().parse(request)
+            web_data = JSONParser().parse(request)
 
-            if auth_data: 
+            if web_data["url"] and web_data["url"].lower().startswith('http'): 
                 bot = instaloader.Instaloader()
-                response = requests.get(auth_data["url"])
+                response = requests.get(web_data["url"])
                 if response.status_code == 200:
-                    soup = BeautifulSoup(response.content, "html.parser")
+                    soup = BeautifulSoup(response.content, "html.parser")   
                     
                     links = soup.find_all("a")
                     data = []
@@ -425,7 +408,7 @@ class ScrappingAPI(APIView):
                         data.append(link.get("href"))
                     return JsonResponse({"data": data}, status=status.HTTP_200_OK) 
             else:
-                return JsonResponse({"error_scrapping": "Unknown User"}, status=status.HTTP_204_NO_CONTENT) 
+                return JsonResponse({"error_web_scrapping": "Website not reachable due to wrong website typed valid with http: or https"}, status=status.HTTP_204_NO_CONTENT) 
         return JsonResponse({"error_scrapping": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST) 
 
     @api_view(['GET', "DELETE"])
@@ -450,5 +433,9 @@ class ScrappingAPI(APIView):
             except:
                 return JsonResponse({"error_scrapping": "Something went wrong with id of user"}, status=status.HTTP_204_NO_CONTENT)
 
-
         return JsonResponse({"error_scrapping": "Something went wrong"}, status=status.HTTP_400_BAD_REQUEST) 
+
+
+   
+    
+

@@ -1,19 +1,20 @@
-@baseUrl = http://127.0.0.1:8000/
+@baseUrl = http://127.0.0.1:4000/
 
+
+# CRUD Users
 
 ###
 GET {{baseUrl}}api/auths HTTP/1.1
 content-type: application/json
-
 
 ###
 POST {{baseUrl}}/api/auths HTTP/1.1
 content-type: application/json
 
 {
-    "username": "7chrisred",
-    "email": "7chrisred@gmail.com",
-    "password": "7chrisred17."
+    "username": "juanito",
+    "email": "juanito@gmail.com",
+    "password": "juanito."
 }
 
 ###
@@ -28,4 +29,33 @@ content-type: application/json
 
 ###
 DELETE  {{baseUrl}}/api/auths/6 HTTP/1.1
+content-type: application/json
+
+# CRUD API SCRAPPING USER
+
+###
+POST {{baseUrl}}/api/scrapping/user HTTP/1.1
+content-type: application/json
+
+{
+"account": "ronaldo"
+}
+
+# CRUD API SCRAPPING WEB
+
+###
+POST {{baseUrl}}/api/scrapping/website HTTP/1.1
+content-type: application/json
+
+{
+"url": "https://stackoverflow.com/questions/64146175/wsgi-application-mysite-wsgi-application-could-not-be-loaded-error-importing"
+}
+
+# CRUD API SCRAPPING HISTORY USER 
+
+###
+GET  {{baseUrl}}/api/scrapping/history/9
+content-type: application/json
+###
+DELETE  {{baseUrl}}/api/scrapping/history/9
 content-type: application/json
