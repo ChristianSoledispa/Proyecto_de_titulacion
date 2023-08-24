@@ -9,7 +9,8 @@ class History(models.Model):
     userId = models.CharField(max_length=200)
     user_scrapping = models.CharField(max_length=70, default="", blank=True)
     web_scrapping = models.CharField(max_length=200, default="", blank=True)
-
+#  
+# 
     # user_search = ArrayField(models.CharField(max_length=100), blank=True, null=True)
 
 class Authentication(models.Model):
