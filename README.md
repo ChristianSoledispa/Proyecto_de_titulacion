@@ -81,11 +81,17 @@ Para establecer conexion con la base de datos se require establecer conexion srv
 ## Rutas disponibles
 
 ```shell
-# backend
+# backend users
 GET /api/auths
 POST /api/auths
 PUT /api/auths
 DELETE /api/auths
+
+# backend scrapping
+POST /api/scrapping/website/<id_client>
+POST /api/scrapping/user/<id_client>
+POST /api/scrapping/history/<id_client>
+DELETE /api/scrapping/history/<id_client>
 
 # frontend
 GET /
